@@ -33,6 +33,9 @@ const colors = {
     black: "#000000",
     green: "#00C38A",
     ok: "#EB4335",
+    gray: "#747474",
+    lightBlack: "#5C5C5C",
+    lightGray: "#939393",
   },
 };
 const components = {

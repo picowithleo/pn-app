@@ -1,6 +1,6 @@
 //TODO:  navbar, search bar, pet sitters list and map
 import SearchBar from "../components/SearchBar";
-import PetSitterCard from "../components/PetSitterCard";
+import PetSitterCard from "../components/PetSitterCard/PetSitterCard";
 import GoogleMap from "../components/GoogleMap";
 
 const HomePage = () => {
