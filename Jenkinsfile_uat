@@ -4,17 +4,17 @@ pipeline {
             nodejs "Node.js 16.19.0"
         }
     stages {
-        stage('Install Plugins') {
-            steps {
-                script {
-                    // install AWS S3 plugin
-                    Jenkins.instance.pluginManager.install([
-                        'aws-java-sdk', 
-                        'aws-s3'
-                    ])
-                }
-            }
-        }
+        // stage('Install Plugins') {
+        //     steps {
+        //         script {
+        //             // install AWS S3 plugin
+        //             Jenkins.instance.pluginManager.install([
+        //                 'aws-java-sdk', 
+        //                 'aws-s3'
+        //             ])
+        //         }
+        //     }
+        // }
         stage('Git checkout') {
             steps{
                 // Get source code from a GitHub repository					
