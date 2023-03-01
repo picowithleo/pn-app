@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-            nodejs "Node.js 16"
+            nodejs "Node.js 16.19.0"
         }
     stages {
         stage('Git checkout') {
@@ -13,14 +13,14 @@ pipeline {
         
         stage('npm install') {
             steps{
-                withEnv(['PATH=/usr/bin:${PATH}']) {
+                // withEnv(['PATH=/usr/bin:${PATH}']) {
                     sh 'echo $PATH'
                     sh 'npm install'
-                }   
+                // }   
             }
         }
         
-            stage('test') {
+        stage('test') {
             steps{
                 sh 'npm test'
             }
