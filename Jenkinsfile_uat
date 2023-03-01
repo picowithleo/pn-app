@@ -13,7 +13,8 @@ pipeline {
         
         stage('npm install') {
             steps{
-                withEnv(['PATH=/usr/bin:$PATH']) {
+                withEnv(['PATH=/usr/bin:${PATH}']) {
+                    sh 'echo $PATH'
                     sh 'npm install'
                 }   
             }
