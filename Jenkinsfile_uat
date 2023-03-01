@@ -1,0 +1,63 @@
+pipeline {
+    agent any
+    tools {
+            nodejs "Node.js 16.19.0"
+        }
+    stages {
+        stage('Install Plugins') {
+            steps {
+                script {
+                    // install AWS S3 plugin
+                    Jenkins.instance.pluginManager.install([
+                        'aws-java-sdk', 
+                        'aws-s3'
+                    ])
+                }
+            }
+        }
+        stage('Git checkout') {
+            steps{
+                // Get source code from a GitHub repository					
+                git branch:'dev', url:'https://github.com/picowithleo/pn-app'
+            }
+        }
+        
+        stage('npm install') {
+            steps{
+                // withEnv(['PATH=/usr/bin:${PATH}']) {
+                //    sh 'echo $PATH'
+                    sh 'npm install'
+                // }   
+            }
+        }
+        
+        stage('test') {
+            steps{
+                sh 'npm test'
+            }
+        }
+    
+        stage('build') {
+            steps{
+                sh 'npm run build'
+            }
+        }
+
+        stage('upload to s3'){
+            steps{
+                withAWS(credentials: 'pico-aws-credentials', region: 'ap-southeast-2') {
+                    // upload build file to S3 bucket
+                    s3Upload(bucket:'pnappbucket', file:'./build', pathStyleAccess:false)
+                }
+            }
+        }
+
+    }
+
+    post {
+        always {
+            cleanWs()
+                    sh 'ls -la'
+        }
+    }
+}
