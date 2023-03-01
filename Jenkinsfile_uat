@@ -13,7 +13,9 @@ pipeline {
         
         stage('npm install') {
             steps{
-                sh 'npm install'
+                withEnv(['PATH=/usr/bin:$PATH']) {
+                    sh 'npm install'
+                }   
             }
         }
         
