@@ -73,14 +73,20 @@ pipeline {
             }
         }
         
-        stage('npm install') {
-            steps{
-                echo 'success install'
+        // stage('Install dependencies') {
+        //     steps{
+        //         echo 'success install'
                 
-                sh 'npm install'    
+        //         sh 'npm install'    
+        //     }
+        // }
+        stage('Install dependencies') {
+            steps {
+                echo 'success go in'
+                sh '/usr/bin/npm install'
+                echo 'success install'
             }
         }
-        
         stage('Build') {
             steps{
                 echo 'success build!'
