@@ -1,63 +1,114 @@
+// pipeline {
+//     agent any
+//     // tools {
+//     //         nodejs "Node.js 16.19.0"
+//     //     }
+//     stages {
+//         // stage('Install Plugins') {
+//         //     steps {
+//         //         script {
+//         //             // install AWS S3 plugin
+//         //             Jenkins.instance.pluginManager.install([
+//         //                 'aws-java-sdk', 
+//         //                 'aws-s3'
+//         //             ])
+//         //         }
+//         //     }
+//         // }
+//         stage('Git checkout') {
+//             steps{
+//                 // Get source code from a GitHub repository					
+//                 git branch:'dev', url:'https://github.com/picowithleo/pn-app'
+//             }
+//         }
+        
+//         stage('npm install') {
+//             steps{
+//                 // withEnv(['PATH=/usr/bin:${PATH}']) {
+//                 //    sh 'echo $PATH'
+//                     sh 'npm install'
+//                 // }   
+//             }
+//         }
+        
+//         stage('test') {
+//             steps{
+//                 sh 'npm test'
+//             }
+//         }
+    
+//         stage('build') {
+//             steps{
+//                 sh 'npm run build'
+//             }
+//         }
+
+//         stage('upload to s3'){
+//             steps{
+//                 withAWS(credentials: 'pico-aws-credentials', region: 'ap-southeast-2') {
+//                     // upload build file to S3 bucket
+//                     s3Upload(bucket:'pnappbucket', file:'./build', pathStyleAccess:false)
+//                 }
+//             }
+//         }
+
+//     }
+
+//     post {
+//         always {
+//             cleanWs()
+//                     sh 'ls -la'
+//         }
+//     }
+// }
+
 pipeline {
     agent any
-    // tools {
-    //         nodejs "Node.js 16.19.0"
-    //     }
+
     stages {
-        // stage('Install Plugins') {
-        //     steps {
-        //         script {
-        //             // install AWS S3 plugin
-        //             Jenkins.instance.pluginManager.install([
-        //                 'aws-java-sdk', 
-        //                 'aws-s3'
-        //             ])
-        //         }
-        //     }
-        // }
         stage('Git checkout') {
             steps{
-                // Get source code from a GitHub repository					
+                echo 'success checkout!'
                 git branch:'dev', url:'https://github.com/picowithleo/pn-app'
             }
         }
         
-        stage('npm install') {
+        // stage('npm install') {
+        //     steps{
+        //         echo 'success install'
+                
+        //         sh 'npm install'    
+        //     }
+        // }
+        
+        stage('Build') {
             steps{
-                // withEnv(['PATH=/usr/bin:${PATH}']) {
-                //    sh 'echo $PATH'
-                    sh 'npm install'
-                // }   
+                echo 'success build!'
+                // Do your build task
             }
         }
         
-        stage('test') {
+        stage('Test') {
             steps{
-                sh 'npm test'
+                echo 'success test!'
+                // Run unit tests, integration tests, and/or e2e tests
             }
         }
-    
-        stage('build') {
+        
+        stage('Publish') {
             steps{
-                sh 'npm run build'
+                echo 'success publish!'
+                // Publish your artifacts to somewhere.
+                // However, in our hands-on, you just need to print the artifact list by Linux command 'ls -la'
             }
         }
-
-        stage('upload to s3'){
-            steps{
-                withAWS(credentials: 'pico-aws-credentials', region: 'ap-southeast-2') {
-                    // upload build file to S3 bucket
-                    s3Upload(bucket:'pnappbucket', file:'./build', pathStyleAccess:false)
-                }
-            }
-        }
-
     }
 
     post {
-        always {
-            cleanWs()
+        always { 
+             cleanWs()
                     sh 'ls -la'
+            echo 'I will always say Hello again!'
         }
     }
 }
