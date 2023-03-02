@@ -73,13 +73,13 @@ pipeline {
             }
         }
         
-        // stage('npm install') {
-        //     steps{
-        //         echo 'success install'
+        stage('npm install') {
+            steps{
+                echo 'success install'
                 
-        //         sh 'npm install'    
-        //     }
-        // }
+                sh 'npm install'    
+            }
+        }
         
         stage('Build') {
             steps{
