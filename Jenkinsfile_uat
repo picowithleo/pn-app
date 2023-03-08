@@ -66,7 +66,18 @@ pipeline {
     agent any
 
     stages {
-        slackSend color: "good", message: "Message from Jenkins Pipeline"
+            
+        stage('test slack') {
+            steps {
+                // Add your build steps here
+                echo 'success go on'
+                script {
+                    slackSend color: "good", message: "Message from Jenkins Pipeline"
+                }
+            }
+        }
+    }
+        
         // stage('Git checkout') {
         //     steps{
         //         slackSend color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL|Open})"
@@ -110,9 +121,12 @@ pipeline {
         //         // However, in our hands-on, you just need to print the artifact list by Linux command 'ls -la'
         //     }
         // }
-    }
+    // }
 
     post {
+        always {
+            slackSend color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
+        }
         success {
                 slackSend color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL|Open})"
             }
