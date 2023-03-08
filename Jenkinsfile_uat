@@ -66,49 +66,50 @@ pipeline {
     agent any
 
     stages {
-        stage('Git checkout') {
-            steps{
-                slackSend color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL|Open})"
-                echo 'success checkout!'
-                git branch:'dev', url:'https://github.com/picowithleo/pn-app'
-            }
-        }
-        
-        // stage('Install dependencies') {
+        slackSend color: "good", message: "Message from Jenkins Pipeline"
+        // stage('Git checkout') {
         //     steps{
-        //         echo 'success install'
-                
-        //         sh 'npm install'    
+        //         slackSend color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL|Open})"
+        //         echo 'success checkout!'
+        //         git branch:'dev', url:'https://github.com/picowithleo/pn-app'
         //     }
         // }
-        stage('Install dependencies') {
-            steps{
-                echo 'success go in'
-                sh '/usr/bin/npm install'
-                echo 'success install'
-            }
-        }
-        stage('Build') {
-            steps{
-                echo 'success build!'
-                // Do your build task
-            }
-        }
         
-        stage('Test') {
-            steps{
-                echo 'success test!'
-                // Run unit tests, integration tests, and/or e2e tests
-            }
-        }
+        // // stage('Install dependencies') {
+        // //     steps{
+        // //         echo 'success install'
+                
+        // //         sh 'npm install'    
+        // //     }
+        // // }
+        // stage('Install dependencies') {
+        //     steps{
+        //         echo 'success go in'
+        //         sh '/usr/bin/npm install'
+        //         echo 'success install'
+        //     }
+        // }
+        // stage('Build') {
+        //     steps{
+        //         echo 'success build!'
+        //         // Do your build task
+        //     }
+        // }
         
-        stage('Publish') {
-            steps{
-                echo 'success publish!'
-                // Publish your artifacts to somewhere.
-                // However, in our hands-on, you just need to print the artifact list by Linux command 'ls -la'
-            }
-        }
+        // stage('Test') {
+        //     steps{
+        //         echo 'success test!'
+        //         // Run unit tests, integration tests, and/or e2e tests
+        //     }
+        // }
+        
+        // stage('Publish') {
+        //     steps{
+        //         echo 'success publish!'
+        //         // Publish your artifacts to somewhere.
+        //         // However, in our hands-on, you just need to print the artifact list by Linux command 'ls -la'
+        //     }
+        // }
     }
 
     post {
@@ -118,10 +119,10 @@ pipeline {
         failure {
             slackSend color: '#FF0000', message: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL|Open})"
         }  
-        always { 
-            cleanWs()
-            sh 'ls -la'
-            echo 'I will always say Hello again!'
-        }
+        // always { 
+        //     cleanWs()
+        //     sh 'ls -la'
+        //     echo 'I will always say Hello again!'
+        // }
     }
 }
