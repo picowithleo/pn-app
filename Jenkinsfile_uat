@@ -76,15 +76,16 @@ pipeline {
                 }
             }
         }
+
+        stage('Git checkout') {
+            steps{
+                
+                git branch:'dev', url:'https://github.com/picowithleo/pn-app'
+            }
+        }
     }
         
-        // stage('Git checkout') {
-        //     steps{
-        //         slackSend color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL|Open})"
-        //         echo 'success checkout!'
-        //         git branch:'dev', url:'https://github.com/picowithleo/pn-app'
-        //     }
-        // }
+       
         
         // // stage('Install dependencies') {
         // //     steps{
