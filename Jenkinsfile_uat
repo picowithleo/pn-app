@@ -68,6 +68,7 @@ pipeline {
     stages {
         stage('Git checkout') {
             steps{
+                slackSend (channel: "#jenkins-bot", color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL|Open})")
                 echo 'success checkout!'
                 git branch:'dev', url:'https://github.com/picowithleo/pn-app'
             }
@@ -81,7 +82,7 @@ pipeline {
         //     }
         // }
         stage('Install dependencies') {
-            steps {
+            steps{
                 echo 'success go in'
                 sh '/usr/bin/npm install'
                 echo 'success install'
@@ -111,9 +112,16 @@ pipeline {
     }
 
     post {
+        
         always { 
-             cleanWs()
-                    sh 'ls -la'
+            success {
+                slackSend (channel: "#jenkins-bot", color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL|Open})")
+            }
+            failure {
+                slackSend (channel: "#jenkins-bot", color: '#FF0000', message: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL|Open})")
+            }  
+            cleanWs()
+            sh 'ls -la'
             echo 'I will always say Hello again!'
         }
     }
